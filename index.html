@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hidro Cajas - Cajas para Transporte de Alimentos</title>
+  <link rel="icon" type="image/png" href="logo2.0.jpg">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* VARIABLES CSS (Para fácil mantenimiento de colores) */
+    :root {
+      --color-principal: #203a43; /* Azul oscuro corporativo */
+      --color-secundario: #00c6ff; /* Cian para acentos */
+      --color-fondo-claro: #f0f4f8;
+      --color-fondo-oscuro: #343a40;
+      --color-exito: #28a745;
+    }
+
+    /* Fuente y fondo global */
+    body {
+      font-family: 'Roboto', 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #c3cacb, #095b79);
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    /* 2.1. Header con parallax */
+    header {
+      background-image: url('logoport.jpg');
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
+      height: 500px;
+      position: relative;
+      color: white;
+      display: flex; /* Añadido para mejor centrado vertical */
+      align-items: center; /* Añadido para mejor centrado vertical */
+    }
+    header .overlay {
+      position: absolute;
+      top:0; left:0; right:0; bottom:0;
+      background-color: rgba(0,0,0,0.45);
+      z-index: 1; /* Asegura que el overlay esté debajo del contenido */
+    }
+    header .header-content {
+      position: relative;
+      z-index: 2;
+      background: linear-gradient(135deg, #a9adaf, #203a43, #2c5364);
+      border-radius: 50px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      max-width: 1200px;
+      width: 90%; /* Mejor uso del ancho */
+      margin: 0 auto;
+      padding: 20px 30px; /* Ajuste de padding */
+    }
+    .logo-img { width: 100px; height: auto; }
+    .text-box span, .text-box nav a { color: #fff; font-weight: 700; text-decoration: none; transition: color 0.3s ease; }
+    .text-box nav a { margin-left: 20px; font-weight: 500; }
+    .text-box nav a:hover { color: #FF5733; }
+    
+    @media (max-width: 768px) {
+      .header-content { flex-direction: column; align-items: flex-start; padding: 10px 15px; border-radius: 20px; }
+      .text-box nav a { margin-left: 0; margin-top: 8px; display: block; }
+      .logo-img { width: 80px; }
+    }
+
+    /* 2.2. Secciones Generales (Scroll Animation) */
+    section { 
+      padding: 60px 0; 
+      max-width: 1200px; 
+      margin: 0 auto; 
+      opacity: 0; 
+      transform: translateY(30px); 
+      transition: all 0.8s ease-out; 
+    }
+    section.visible { 
+      opacity: 1; 
+      transform: translateY(0); 
+    }
+    section h2 { 
+      margin-bottom: 40px; 
+      font-weight: 700; 
+    }
+
+    /* 2.3. Sección Inicio (CSS Unificado) */
+    #inicio {
+      background: linear-gradient(135deg, var(--color-principal), #2c5364);
+      color: #fff;
+      text-align: center;
+      padding: 70px 20px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    #inicio .capsula {
+      max-width: 700px;
+      margin: auto;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 40px 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      animation: fadeIn 1.5s ease;
+    }
+
+    #inicio h2 {
+      font-size: 2.2rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    #inicio h2 span {
+      color: var(--color-secundario);
+    }
+
+    #inicio .divider {
+      width: 70px;
+      height: 4px;
+      background: var(--color-secundario);
+      margin: 0 auto 25px;
+      border-radius: 3px;
+    }
+
+    #inicio p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #f1f1f1;
+      margin-bottom: 25px;
+    }
+
+    .animar-imagen {
+  max-width: 500px;
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  margin: 20px auto;
+  display: block;
+  opacity: 0;
+  transform: scale(0.9);
+  animation: imagenFadeZoom 1.5s ease forwards;
+  animation-delay: 0.5s; /* Retraso opcional para que aparezca después del texto */
+}
+
+@keyframes imagenFadeZoom {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .social-icons a {
+      color: #fff;
+      font-size: 1.5rem;
+      transition: transform 0.3s, color 0.3s;
+    }
+
+    .social-icons a:hover {
+      color: var(--color-secundario);
+      transform: scale(1.2);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* 2.4. Carrusel Principal (Videos/Imágenes) */
+    .contenedor-video {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #000;
+      height: 80vh; /* altura fija del carrusel */
+      overflow: hidden; /* Evita desbordamiento al contener imágenes/videos */
+    }
+
+    .contenedor-video video,
+    .contenedor-video img {
+      max-height: 100%;
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain; /* Nunca recorta, mantiene la relación de aspecto */
+    }
+
+    .carousel-control-prev img,
+    .carousel-control-next img {
+      width: 50px;
+      height: 50px;
+    }
+    
+    /* 2.5. Productos */
+    .product-card {
+      display: flex;
+      gap: 50px;
+      align-items: center;
+      margin-bottom: 60px;
+      padding: 30px;
+      border-radius: 20px;
+      background: #fff;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+    }
+
+    .product-card.reverse {
+      flex-direction: row-reverse;
+    }
+
+    .product-img, .product-info {
+      flex: 1;
+    }
+
+    .product-img img {
+      width: 100%;
+      height: auto;
+      border-radius: 15px;
+      object-fit: contain;
+    }
+
+    .product-info h2 {
+      font-size: 2rem;
+      color: #222;
+      margin-bottom: 15px;
+    }
+
+    .product-info p {
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    
+    /* Botón de WhatsApp */
+    .btn-whatsapp {
+      background-color: var(--color-exito);
+      border: none;
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      color: #fff;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    .btn-whatsapp:hover {
+      transform: scale(1.05);
+      background-color: #218838;
+      color: #fff;
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+      background-color: rgba(0,0,0,0.4);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+    }
+
+    /* Responsive Productos */
+    @media(max-width:768px){
+      .product-card, .product-card.reverse {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+      }
+      .product-img, .product-info {
+        flex: 1 1 100%;
+      }
+    }
+    
+    /* 2.6. Contacto */
+   
+.contact-card {
+  background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('logo2.jpg') no-repeat center center;
+  background-size: cover;
+  border-radius:20px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.2);
+  padding:50px;
+  color:#fff;
+  text-align:center;
+  max-width:700px;
+  margin:50px auto;
+  transition:0.3s;
+  animation: fadeIn 1.5s ease;
+}
+
+.contact-card:hover { 
+  transform:scale(1.02);
+}
+
+.contact-card a.btn { 
+  background: #49c95a; 
+  color:#fff; 
+  padding:15px 30px; 
+  border-radius:50px; 
+  font-size:1.2rem; 
+  text-decoration:none; 
+  transition:0.3s;
+}
+
+.contact-card a.btn:hover { 
+  background:#00b0e6; 
+  transform:scale(1.05);
+}
+
+@keyframes fadeIn { 
+  from {opacity:0; transform:translateY(20px);} 
+  to {opacity:1; transform:translateY(0);}
+}
+
+    
+    /* 2.7. Footer */
+    footer { 
+      background-color: var(--color-fondo-oscuro); 
+      color: white; 
+      text-align: center; 
+      padding: 20px 0; 
+    }
+
+    .imagen-inicio img {
+  max-width: 500px; /* tamaño máximo deseado */
+  width: 100%;      /* se adapta al contenedor */
+  height: auto;     /* mantiene proporciones */
+  display: block;
+  margin: 20px auto 0; /* centrada y con separación */
+}
+
+
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="overlay"></div>
+  <div class="header-content container d-flex justify-content-between align-items-center text-box">
+    <div class="logo">
+      <img src="log1.png" alt="Logo Hidro Cajas" class="logo-img">
+      <span class="h3 ms-2">Hidro Cajas</span>
+    </div>
+    <nav>
+      
+      <a href="#productos">Productos</a>
+      <a href="https://wa.me/52114492730268" target="_blank">WhatsApp</a>
+    </nav>
+  </div>
+</header>
+
+<section id="inicio">
+  <div class="capsula">
+    <h2>Bienvenido a <span>Hidro Cajas</span></h2>
+    <div class="divider"></div>
+    <p>
+      Transformamos la manera en que México transporta sus alimentos, brindando 
+      confianza y resistencia en cada caja, para que los productos del campo lleguen 
+      intactos a cada rincón del país.
+    </p>
+    <div class="social-icons">
+      <a href="https://www.facebook.com/profile.php?id=61581184540479&locale=es_LA" target="_blank" aria-label="Facebook">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="mailto:hidrocajags@gmail.com" aria-label="Correo Electrónico">
+        <i class="fas fa-envelope"></i>
+      </a>
+    </div>
+
+    
+</section>
+
+ <div class="imagen-inicio">
+  <img src="a1.png" alt="Hidro Cajas" class="animar-imagen"/>
+</div>
+  
+
+<section id="galeria">
+
+<section id="galeria">
+  <div id="carouselVideos" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+
+      <div class="carousel-item active">
+        <div class="contenedor-video">
+          <video autoplay loop muted preload="auto" class="video-item">
+            <source src="videop.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+  <div class="carousel-item ">
+        <div class="contenedor-video">
+          <video autoplay loop muted preload="auto" class="video-item">
+            <source src="video2.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+        <div class="carousel-item ">
+        <div class="contenedor-video">
+          <video autoplay loop muted preload="auto" class="video-item">
+            <source src="Videop1.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+     
+      
+      <div class="carousel-item">
+        <div class="contenedor-video">
+          <img src="stock1.jpg" alt="Cajas apiladas en almacén" loading="lazy">
+        </div>
+      </div>
+      <div class="carousel-item">
+        <div class="contenedor-video">
+          <img src="stock2.jpg" alt="Producto transportado en caja" loading="lazy">
+        </div>
+      </div>
+      <div class="carousel-item">
+        <div class="contenedor-video">
+          <img src="cajas .jpg" alt="Primer plano de cajas" loading="lazy">
+        </div>
+      </div>
+
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselVideos" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselVideos" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Siguiente</span>
+    </button>
+  </div>
+</section>
+
+
+<div class="map-container text-center my-5">
+  <h3 class="mb-4">Encuéntranos aquí</h3>
+  <iframe
+    src="https://www.google.com/maps?q=21.85390503636142,-102.35159868003178&hl=es&z=17&output=embed"
+    width="800" height="400" style="border:0; max-width:90%; border-radius:15px;" allowfullscreen="" loading="lazy">
+  </iframe>
+</div>
+
+
+
+<section id="productos" style="background:var(--color-fondo-oscuro); padding:60px 20px;">
+  <h2 class="text-center text-white mb-5">Nuestros Productos</h2>
+
+  <div class="product-card">
+    <div class="product-img carousel slide" id="carouselProducto1" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active"><img src="1.png" class="d-block w-100" alt="Caja Colima vista frontal" loading="lazy"></div>
+        <div class="carousel-item"><img src="2.png" class="d-block w-100" alt="Caja Colima apilada" loading="lazy"></div>
+        <div class="carousel-item"><img src="3.png" class="d-block w-100" alt="Caja Colima con producto" loading="lazy"></div>
+        <div class="carousel-item"><img src="4.png" class="d-block w-100" alt="Detalle de Caja Colima" loading="lazy"></div>
+        <div class="carousel-item"><img src="5.png" class="d-block w-100" alt="Caja Colima lateral" loading="lazy"></div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselProducto1" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselProducto1" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+    </div>
+
+    <div class="product-info">
+      <h2>Caja COLIMA</h2>
+      <p>Ideal para el transporte seguro y resistente de frutas y hortalizas.</p>
+      <ul class="list-unstyled">
+        <li><strong>Altura:</strong> 30.6 cm</li>
+        <li><strong>Ancho:</strong> 35.5 cm</li>
+        <li><strong>Largo:</strong> 49 cm</li>
+        <li><strong>Peso:</strong> 1.645 Kg</li>
+        <li><strong>Capacidad:</strong> 27 Kg</li>
+      </ul>
+      <a href="https://wa.me/52114492730268?text=🌟%20Hola,%20quiero%20más%20información%20sobre%20sus%20productos%20y%20una%20cotización.%20📦" target="_blank" class="btn btn-whatsapp">Comprar por WhatsApp</a>
+    </div>
+  </div>
+
+  <div class="product-card reverse">
+    <div class="product-info">
+      <h2>Caja Araña </h2>
+      <p>Diseño optimizado para apilamiento y ventilación eficiente. Máxima durabilidad.</p>
+      <ul class="list-unstyled">
+        <li><strong>Altura:</strong> 25 cm</li>
+        <li><strong>Ancho:</strong> 30 cm</li>
+        <li><strong>Largo:</strong> 40 cm</li>
+        <li><strong>Peso:</strong> 1.2 Kg</li>
+        <li><strong>Capacidad:</strong> 20 Kg</li>
+      </ul>
+      <a href="https://wa.me/52114492730268?text=🌟%20Hola,%20quiero%20más%20información%20sobre%20sus%20productos%20y%20una%20cotización.%20📦" target="_blank" class="btn btn-whatsapp">Comprar por WhatsApp</a>
+    </div>
+    
+    <div class="product-img carousel slide" id="carouselProducto2" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active"><img src="6.png" class="d-block w-100" alt="Caja Jalisco vista superior" loading="lazy"></div>
+        <div class="carousel-item"><img src="7.png" class="d-block w-100" alt="Caja Jalisco lateral" loading="lazy"></div>
+        <div class="carousel-item"><img src="8.png" class="d-block w-100" alt="Caja Jalisco con rejilla" loading="lazy"></div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselProducto2" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselProducto2" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <div class="product-img carousel slide" id="carouselProducto3" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active"><img src="9.png" class="d-block w-100" alt="Caja Nayarit apilada" loading="lazy"></div>
+        <div class="carousel-item"><img src="10.png" class="d-block w-100" alt="Caja Nayarit de cerca" loading="lazy"></div>
+        <div class="carousel-item"><img src="11.png" class="d-block w-100" alt="Caja Nayarit vacía" loading="lazy"></div>
+        <div class="carousel-item"><img src="12.png" class="d-block w-100" alt="Caja Nayarit detalle lateral" loading="lazy"></div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselProducto3" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselProducto3" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+    </div>
+
+    <div class="product-info">
+      <h2>Caja Aguacatera</h2>
+      <p>Nuestra caja ligera, perfecta para productos que requieren cuidado especial en el manejo.</p>
+      <ul class="list-unstyled">
+        <li><strong>Altura:</strong> 18 cm</li>
+        <li><strong>Ancho:</strong> 30 cm</li>
+        <li><strong>Largo:</strong> 50 cm</li>
+        <li><strong>Peso:</strong> 0.8 Kg</li>
+        <li><strong>Capacidad:</strong> 15 Kg</li>
+      </ul>
+      <a href="https://wa.me/52114492730268?text=🌟%20Hola,%20quiero%20más%20información%20sobre%20sus%20productos%20y%20una%20cotización.%20📦" target="_blank" class="btn btn-whatsapp">Comprar por WhatsApp</a>
+    </div>
+  </div>
+
+<div class="product-card">
+  <div class="product-img carousel slide" id="carouselProducto4" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active"><img src="cajajam.png" class="d-block w-100" alt="" loading="lazy"></div>
+      <div class="carousel-item"><img src="cajajam2.png" class="d-block w-100" alt="" loading="lazy"></div>
+      <div class="carousel-item"><img src="cajajam3.png" class="d-block w-100" alt="" loading="lazy"></div>
+      <div class="carousel-item"><img src="cajajam4.png" class="d-block w-100" alt="" loading="lazy"></div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselProducto4" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselProducto4" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </button>
+  </div>
+
+  <div class="product-info">
+    <h2>Caja JAMONERA</h2>
+    <p>Inspirada en su uso tradicional para transportar productos cárnicos, la Caja Jamonera combina resistencia y practicidad. Su diseño permite un apilamiento estable y una excelente ventilación, ideal para conservar y mover alimentos frescos con seguridad..</p>
+    <ul class="list-unstyled">
+      <li><strong>Altura:</strong> 28 cm</li>
+      <li><strong>Ancho:</strong> 33.3 cm</li>
+      <li><strong>Largo:</strong> 50 cm</li>
+      <li><strong>Peso:</strong> 1.485 Kg</li>
+      <li><strong>Capacidad:</strong> 23 Kg</li>
+    </ul>
+    <a href="https://wa.me/52114492730268?text=🌟%20Hola,%20quiero%20más%20información%20sobre%20sus%20productos%20y%20una%20cotización.%20📦" target="_blank" class="btn btn-whatsapp">Comprar por WhatsApp</a>
+  </div>
+</div>
+
+
+</section>
+
+
+<section id="contacto" class="contact-card container">
+  <h2>¿Listo para optimizar tu transporte?</h2>
+  <p>Haz clic en el botón para enviarnos un mensaje directo por WhatsApp y cotizar. </p>
+  <a href="https://wa.me/52114492730268?text=🌟%20Hola,%20quiero%20más%20información%20sobre%20sus%20productos%20y%20una%20cotización.%20📦" target="_blank" class="btn btn-light btn-lg">
+    <i class="fab fa-whatsapp me-2"></i> Enviar WhatsApp
+  </a>
+</section>
+
+
+<footer>
+  <div class="container">
+    <p class="mb-0">© 2025 Hidro Cajas | Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js" crossorigin="anonymous"></script>
+
+<script>
+  // 4.1. Animación de Scroll
+  const sections = document.querySelectorAll('section');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) { 
+        entry.target.classList.add('visible'); 
+        // Dejar de observar una vez que se hizo visible
+        observer.unobserve(entry.target); 
+      }
+    });
+  }, { threshold: 0.1 });
+  sections.forEach(section => observer.observe(section));
+  
+  // 4.2. Control de Videos del Carrusel (Mejora de Rendimiento)
+  const videoCarousel = document.getElementById('carouselVideos');
+  if (videoCarousel) {
+    videoCarousel.addEventListener('slide.bs.carousel', function (e) {
+      // 1. Pausa el video saliente (anterior)
+      const prevItem = e.relatedTarget.parentNode.querySelector('.carousel-item.active video');
+      if (prevItem && prevItem.classList.contains('video-item')) {
+        prevItem.pause();
+      }
+
+      // 2. Reproduce el video entrante (nuevo)
+      const nextItem = e.relatedTarget.querySelector('.video-item');
+      if (nextItem && nextItem.tagName === 'VIDEO') {
+        nextItem.play();
+      }
+    });
+  }
+
+</script>
+
+</body>
+</html>
